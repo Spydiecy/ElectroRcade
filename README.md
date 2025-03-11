@@ -1,6 +1,6 @@
 # ElectroRcade
 
-![Screenshot 2025-03-11 162139](https://github.com/user-attachments/assets/4aa5cf40-f5de-47a5-99eb-402b1a3c844f)
+![Screenshot 2025-03-11 162139](https://github.com/user-attachments/assets/ab595477-fee5-440e-b76e-fec9adee736c)
 
 ## Play-to-Earn Gaming Platform on Electroneum Blockchain
 
