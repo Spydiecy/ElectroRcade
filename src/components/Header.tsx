@@ -68,13 +68,13 @@ export default function Header() {
             onClick={(e) => handleNavClick('/', e)}
           >
             <Image 
-              src="/corecade-logo.png" 
-              alt="CoreCade" 
+              src="/logo.png" 
+              alt="ElectroRcade" 
               width={40} 
               height={40} 
               className="mr-2"
             />
-            <span className="font-arcade text-xl text-white hidden sm:block">CORECADE</span>
+            <span className="font-arcade text-xl text-white hidden sm:block">ELECTRORCADE</span>
           </a>
           
           {/* Desktop Navigation */}

@@ -6,22 +6,22 @@ import { useEffect, useState } from 'react';
 import { PointsProvider } from './contexts/PointsContext';
 import { WalletProvider } from './contexts/WalletContext';
 
-export const coreTestnet = defineChain({
-  id: 1115,
-  name: 'Core Blockchain Testnet',
-  network: 'core-testnet',
+export const electroneumMainnet = defineChain({
+  id: 52014,
+  name: 'Electroneum Mainnet',
+  network: 'electroneum-mainnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'tCore',
-    symbol: 'tCORE',
+    name: 'ETN',
+    symbol: 'ETN',
   },
   rpcUrls: {
     default: {
-      http: ['https://rpc.test.btcs.network'],
+      http: ['https://rpc.ankr.com/electroneum'],
     },
   },
   blockExplorers: {
-    default: {name: 'Core Testnet Explorer', url: 'https://scan.test.btcs.network'},
+    default: {name: 'Electroneum Explorer', url: 'https://blockexplorer.electroneum.com'},
   },
 });
 
@@ -35,13 +35,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         appearance: {
           theme: 'dark',
           accentColor: '#FF10F0',
-          logo: 'https://corecade.vercel.app/corecade-logo.png',
+          logo: 'https://corecade.netlify.app/_next/image?url=%2Fcorecade-logo.png&w=96&q=75',
         },
         embeddedWallets: {
           createOnLogin: 'users-without-wallets',
         },
-        defaultChain: coreTestnet,
-        supportedChains: [coreTestnet],
+        defaultChain: electroneumMainnet,
+        supportedChains: [electroneumMainnet],
       }}
     >
       <WalletProvider>

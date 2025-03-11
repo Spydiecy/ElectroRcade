@@ -1140,6 +1140,29 @@ function GamesPageClient() {
       };
     }
   }, [walletConnected, activeGame]);
+
+  // Add ETN price fetching
+  const [etnPrice, setEtnPrice] = useState(0);
+  
+  useEffect(() => {
+    const fetchEtnPrice = async () => {
+      try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=electroneum&vs_currencies=usd');
+        const data = await response.json();
+        if (data.electroneum && data.electroneum.usd) {
+          setEtnPrice(data.electroneum.usd);
+        }
+      } catch (error) {
+        console.error('Error fetching ETN price:', error);
+      }
+    };
+    
+    fetchEtnPrice();
+    // Refresh price every 5 minutes
+    const interval = setInterval(fetchEtnPrice, 300000);
+    
+    return () => clearInterval(interval);
+  }, []);
   
   if (isLoading) {
     return (

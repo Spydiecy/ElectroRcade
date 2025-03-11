@@ -26,7 +26,7 @@ export default function DashboardPage() {
     refreshBalance,
     loading: pointsLoading, 
     error: pointsError,
-    corePrice,
+    etnPrice,
     isLoadingPrice 
   } = usePoints();
   
@@ -80,13 +80,19 @@ export default function DashboardPage() {
 
   // Handle deposit
   const handleDeposit = async () => {
-    if (!depositAmount) return;
+    if (!depositAmount) {
+      showNotification('error', 'Please enter an amount to deposit');
+      return;
+    }
     
     try {
+      // Update this message to reference ETN instead of Core tokens
+      showNotification('success', `Converting ${depositAmount} ETN to platform points...`);
+      
       const success = await convertToPoints(depositAmount);
       
       if (success) {
-        showNotification('success', `Successfully deposited ${depositAmount} CORE!`);
+        showNotification('success', `Successfully converted ${depositAmount} ETN to platform points!`);
         setDepositAmount('');
         // Refresh balance
         await refreshBalance();
@@ -94,20 +100,27 @@ export default function DashboardPage() {
         showNotification('error', 'Deposit failed. Please try again.');
       }
     } catch (error) {
-      console.error('Deposit error:', error);
-      showNotification('error', 'An error occurred during deposit.');
+      console.error('Error during deposit:', error);
+      showNotification('error', 'Failed to convert ETN to points. Please try again.');
     }
   };
 
   // Handle withdraw
   const handleWithdraw = async () => {
-    if (!withdrawAmount || parseFloat(withdrawAmount) > balance) return;
+    if (!withdrawAmount || parseFloat(withdrawAmount) > balance) {
+      showNotification('error', parseFloat(withdrawAmount) > balance ? 
+        'Insufficient balance' : 'Please enter an amount to withdraw');
+      return;
+    }
     
     try {
+      // Update this message to reference ETN instead of Core tokens
+      showNotification('success', `Converting ${withdrawAmount} points to ETN...`);
+      
       const success = await withdrawPoints(withdrawAmount);
       
       if (success) {
-        showNotification('success', `Successfully withdrew ${withdrawAmount} points!`);
+        showNotification('success', `Successfully converted ${withdrawAmount} points to ETN!`);
         setWithdrawAmount('');
         // Refresh balance
         await refreshBalance();
@@ -115,8 +128,8 @@ export default function DashboardPage() {
         showNotification('error', 'Withdrawal failed. Please try again.');
       }
     } catch (error) {
-      console.error('Withdraw error:', error);
-      showNotification('error', 'An error occurred during withdrawal.');
+      console.error('Error during withdrawal:', error);
+      showNotification('error', 'Failed to convert points to ETN. Please try again.');
     }
   };
 
@@ -233,15 +246,15 @@ export default function DashboardPage() {
                     <p className="ml-2 text-gray-400 mb-1">PTS</p>
                   </div>
                   
-                  {!isLoadingPrice && corePrice > 0 && (
+                  {!isLoadingPrice && etnPrice > 0 && (
                     <p className="text-gray-500 text-sm mt-2">
-                      ≈ ${((balance / 1000) * corePrice).toFixed(2)} USD
+                      ≈ ${((balance / 1000) * etnPrice).toFixed(4)} USD
                     </p>
                   )}
                 </div>
 
                 <div className="bg-black/30 border border-neon-blue p-6 rounded-md">
-                  <p className="text-gray-400 text-sm mb-2">Equivalent CORE Balance</p>
+                  <p className="text-gray-400 text-sm mb-2">Equivalent ETN Balance</p>
                   <div className="flex items-end">
                     <p className="text-3xl font-arcade text-neon-blue">
                       {isLoading || pointsLoading ? (
@@ -252,12 +265,12 @@ export default function DashboardPage() {
                         (balance / 1000).toFixed(3)
                       )}
                     </p>
-                    <p className="ml-2 text-gray-400 mb-1">CORE</p>
+                    <p className="ml-2 text-gray-400 mb-1">ETN</p>
                   </div>
                   
-                  {!isLoadingPrice && corePrice > 0 && (
+                  {!isLoadingPrice && etnPrice > 0 && (
                     <p className="text-gray-500 text-sm mt-2">
-                      ≈ ${((balance / 1000) * corePrice).toFixed(2)} USD
+                      ≈ ${((balance / 1000) * etnPrice).toFixed(4)} USD
                     </p>
                   )}
                 </div>
@@ -276,11 +289,11 @@ export default function DashboardPage() {
                 <h3 className="text-xl font-arcade text-white mb-4">DEPOSIT</h3>
                 <div className="text-gray-300 text-sm mb-4 space-y-2">
                   <p className="cyberpunk-text">
-                    Convert CORE tokens to platform points.
+                    Convert ETN tokens to platform points.
                   </p>
                   <p className="text-xs text-gray-400">
-                    Rate: 1 CORE = 1,000 Points
-                    {!isLoadingPrice && corePrice > 0 && ` (≈ $${corePrice.toFixed(2)} USD)`}
+                    Rate: 1 ETN = 1,000 Points
+                    {!isLoadingPrice && etnPrice > 0 && ` (≈ $${etnPrice.toFixed(4)} USD)`}
                   </p>
                 </div>
                 
@@ -291,7 +304,7 @@ export default function DashboardPage() {
                     onChange={(e) => setDepositAmount(e.target.value)}
                     disabled={pointsLoading}
                     className="flex-grow bg-black/80 border border-neon-green text-white p-2 rounded-l-md focus:outline-none"
-                    placeholder="Amount in CORE"
+                    placeholder="Amount in ETN"
                   />
                   <button
                     onClick={handleDeposit}
@@ -306,9 +319,9 @@ export default function DashboardPage() {
                     <p className="text-gray-300">
                       You will receive: {(parseFloat(depositAmount) * 1000).toLocaleString()} Points
                     </p>
-                    {!isLoadingPrice && corePrice > 0 && (
+                    {!isLoadingPrice && etnPrice > 0 && (
                       <p className="text-gray-400">
-                        Value: ${(parseFloat(depositAmount) * corePrice).toFixed(2)} USD
+                        Value: ${(parseFloat(depositAmount) * etnPrice).toFixed(4)} USD
                       </p>
                     )}
                   </div>
@@ -320,11 +333,11 @@ export default function DashboardPage() {
                 <h3 className="text-xl font-arcade text-white mb-4">WITHDRAW</h3>
                 <div className="text-gray-300 text-sm mb-4 space-y-2">
                   <p className="cyberpunk-text">
-                    Convert platform points back to CORE tokens.
+                    Convert platform points back to ETN tokens.
                   </p>
                   <p className="text-xs text-gray-400">
-                    Rate: 1,000 Points = 1 CORE
-                    {!isLoadingPrice && corePrice > 0 && ` (≈ $${corePrice.toFixed(2)} USD)`}
+                    Rate: 1,000 Points = 1 ETN
+                    {!isLoadingPrice && etnPrice > 0 && ` (≈ $${etnPrice.toFixed(4)} USD)`}
                   </p>
                 </div>
                 
@@ -348,11 +361,11 @@ export default function DashboardPage() {
                 {withdrawAmount && !isNaN(parseFloat(withdrawAmount)) && (
                   <div className="mt-2 text-sm space-y-1">
                     <p className="text-gray-300">
-                      You will receive: {(parseFloat(withdrawAmount) / 1000).toFixed(3)} CORE
+                      You will receive: {(parseFloat(withdrawAmount) / 1000).toFixed(3)} ETN
                     </p>
-                    {!isLoadingPrice && corePrice > 0 && (
+                    {!isLoadingPrice && etnPrice > 0 && (
                       <p className="text-gray-400">
-                        Value: ${((parseFloat(withdrawAmount) / 1000) * corePrice).toFixed(2)} USD
+                        Value: ${((parseFloat(withdrawAmount) / 1000) * etnPrice).toFixed(4)} USD
                       </p>
                     )}
                   </div>

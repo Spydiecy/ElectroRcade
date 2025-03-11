@@ -65,7 +65,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.9 }}
               className="mb-12 text-gray-300 text-lg cyberpunk-text max-w-2xl mx-auto leading-relaxed"
             >
-              CoreCade is a futuristic gaming platform where your skills earn you real rewards on the Core blockchain.
+              ElectroRcade is a futuristic gaming platform where your skills earn you real rewards on the Electroneum blockchain.
             </motion.p>
             
             <motion.div

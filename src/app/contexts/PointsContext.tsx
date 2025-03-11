@@ -11,7 +11,7 @@ type PointsContextType = {
   refreshBalance: () => Promise<void>;
   loading: boolean;
   error: string | null;
-  corePrice: number;
+  etnPrice: number;
   isLoadingPrice: boolean;
 };
 
@@ -28,26 +28,30 @@ export function PointsProvider({ children }: { children: ReactNode }) {
     error 
   } = usePointsManager();
 
-  const [corePrice, setCorePrice] = useState<number>(0);
+  const [etnPrice, setEtnPrice] = useState<number>(0);
   const [isLoadingPrice, setIsLoadingPrice] = useState(true);
 
-  // Fetch CORE price
+  // Fetch ETN price
   useEffect(() => {
-    const fetchCorePrice = async () => {
+    const fetchEtnPrice = async () => {
       try {
-        const response = await fetch('https://api.coinbase.com/v2/prices/CORECHAIN-USD/spot');
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=electroneum&vs_currencies=usd');
         const data = await response.json();
-        setCorePrice(parseFloat(data.data.amount));
+        if (data.electroneum && data.electroneum.usd) {
+          setEtnPrice(data.electroneum.usd);
+        } else {
+          console.error('Unexpected ETN price format:', data);
+        }
         setIsLoadingPrice(false);
       } catch (error) {
-        console.error('Error fetching CORE price:', error);
+        console.error('Error fetching ETN price:', error);
         setIsLoadingPrice(false);
       }
     };
 
-    fetchCorePrice();
+    fetchEtnPrice();
     // Refresh price every 5 minutes
-    const interval = setInterval(fetchCorePrice, 300000);
+    const interval = setInterval(fetchEtnPrice, 300000);
     return () => clearInterval(interval);
   }, []);
 
@@ -72,7 +76,7 @@ export function PointsProvider({ children }: { children: ReactNode }) {
     refreshBalance,
     loading,
     error,
-    corePrice,
+    etnPrice,
     isLoadingPrice
   };
 
@@ -89,4 +93,4 @@ export function usePoints() {
     throw new Error('usePoints must be used within a PointsProvider');
   }
   return context;
-} 
+}

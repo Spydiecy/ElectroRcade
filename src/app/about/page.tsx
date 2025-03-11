@@ -30,16 +30,16 @@ export default function AboutPage() {
   // Sample FAQ data
   const faqItems = [
     { 
-      question: 'What is CoreCade?', 
-      answer: 'CoreCade is a play-to-earn gaming platform built on the Core blockchain. Players can compete in skill-based mini-games and earn real rewards in the form of tokens.' 
+      question: 'What is ElectroRcade?', 
+      answer: 'ElectroRcade is a play-to-earn gaming platform built on the Electroneum blockchain. Players can compete in skill-based mini-games and earn real rewards in the form of ETN tokens.' 
     },
     { 
       question: 'How do I get started?', 
-      answer: 'Connect your wallet, convert some Core tokens into platform points, and start playing games! You\'ll earn rewards based on your performance and skill.' 
+      answer: 'Connect your wallet, convert some ETN tokens into platform points, and start playing games! You\'ll earn rewards based on your performance and skill.' 
     },
     { 
-      question: 'Is CoreCade secure?', 
-      answer: 'Yes, CoreCade is built on secure smart contracts that have been thoroughly audited. All game outcomes and prize distributions are transparent and verifiable on-chain.' 
+      question: 'Is ElectroRcade secure?', 
+      answer: 'Yes, ElectroRcade is built on secure smart contracts that have been thoroughly audited. All game outcomes and prize distributions are transparent and verifiable on-chain.' 
     },
     { 
       question: 'What games are available?', 
@@ -47,7 +47,7 @@ export default function AboutPage() {
     },
     { 
       question: 'How do rewards work?', 
-      answer: 'When you win a game, you receive a prize in the form of platform points. These can be converted back to Core tokens and withdrawn to your wallet.' 
+      answer: 'When you win a game, you receive a prize in the form of platform points. These can be converted back to ETN tokens and withdrawn to your wallet.' 
     },
     { 
       question: 'Can I create my own game rooms?', 
@@ -122,7 +122,7 @@ export default function AboutPage() {
                 <h2 className="text-2xl font-arcade text-neon-blue mb-6">Our Mission</h2>
                 <div className="text-gray-300 space-y-4 leading-relaxed">
                   <p>
-                    CoreCade was created with a simple yet powerful vision: to combine the nostalgic joy of arcade gaming with the innovative potential of blockchain technology. Our mission is to build a thriving play-to-earn ecosystem where skill is rewarded and fun is paramount.
+                    CoreCade was created with a simple yet powerful vision: to combine the nostalgic joy of arcade gaming with the innovative potential of blockchain technology. Our mission is to build a thriving play-to-earn ecosystem where skill is rewarded and fun is paramount.unt.
                   </p>
                   <p>
                     We believe gaming should be accessible, engaging, and rewarding. By leveraging the Core blockchain, we've created a platform where players can compete in skill-based mini-games and earn real value based on their performance.
