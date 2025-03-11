@@ -86,7 +86,6 @@ export default function DashboardPage() {
     }
     
     try {
-      // Update this message to reference ETN instead of Core tokens
       showNotification('success', `Converting ${depositAmount} ETN to platform points...`);
       
       const success = await convertToPoints(depositAmount);
@@ -114,7 +113,6 @@ export default function DashboardPage() {
     }
     
     try {
-      // Update this message to reference ETN instead of Core tokens
       showNotification('success', `Converting ${withdrawAmount} points to ETN...`);
       
       const success = await withdrawPoints(withdrawAmount);

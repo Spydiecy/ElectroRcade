@@ -222,7 +222,7 @@ export default function Home() {
             <StepCard 
               number="01"
               title="DEPOSIT"
-              description="Convert Core tokens into platform points"
+              description="Convert ETN tokens into platform points"
               color="blue"
               delay={0.3}
               icon="wallet"
